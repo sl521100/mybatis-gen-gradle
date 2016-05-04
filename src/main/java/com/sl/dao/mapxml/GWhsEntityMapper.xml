@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sl.dao.mapper.GWhsEntityMapper" >
+<!--AUTOGEN-BEGIN-->
+
+  <resultMap id="BaseResultMap" type="com.sl.dao.entity.GWhsEntity" >
+    <id column="RECID" property="recid" jdbcType="DECIMAL" />
+    <result column="PCS" property="pcs" jdbcType="DECIMAL" />
+    <result column="WEIGHT" property="weight" jdbcType="DECIMAL" />
+    <result column="EI" property="ei" jdbcType="VARCHAR" />
+    <result column="VOL" property="vol" jdbcType="DECIMAL" />
+    <result column="ULD_NO" property="uldNo" jdbcType="VARCHAR" />
+    <result column="WHSLOCATION" property="whslocation" jdbcType="VARCHAR" />
+    <result column="MAWBID" property="mawbid" jdbcType="DECIMAL" />
+    <result column="AWBPRE" property="awbpre" jdbcType="VARCHAR" />
+    <result column="AWBNO" property="awbno" jdbcType="VARCHAR" />
+    <result column="CREATE_OPE" property="createOpe" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="DATE" />
+    <result column="UPDATE_OPE" property="updateOpe" jdbcType="VARCHAR" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="DATE" />
+    <result column="COMPANY_CODE" property="companyCode" jdbcType="VARCHAR" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="EXT1" property="ext1" jdbcType="VARCHAR" />
+    <result column="EXT2" property="ext2" jdbcType="VARCHAR" />
+    <result column="DEPTID" property="deptid" jdbcType="DECIMAL" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    RECID, PCS, WEIGHT, EI, VOL, ULD_NO, WHSLOCATION, MAWBID, AWBPRE, AWBNO, CREATE_OPE, 
+    CREATE_TIME, UPDATE_OPE, UPDATE_TIME, COMPANY_CODE, REMARK, EXT1, EXT2, DEPTID
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.math.BigDecimal" >
+    select 
+    <include refid="Base_Column_List" />
+    from G_WHS
+    where RECID = #{recid,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.math.BigDecimal" >
+    delete from G_WHS
+    where RECID = #{recid,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="com.sl.dao.entity.GWhsEntity" >
+    <selectKey resultType="java.math.BigDecimal" keyProperty="recid" order="BEFORE" >
+      select SEQ_G_WHS.NEXTVAL as recid from dual
+    </selectKey>
+    insert into G_WHS (RECID, PCS, WEIGHT, 
+      EI, VOL, ULD_NO, WHSLOCATION, 
+      MAWBID, AWBPRE, AWBNO, 
+      CREATE_OPE, CREATE_TIME, UPDATE_OPE, 
+      UPDATE_TIME, COMPANY_CODE, REMARK, 
+      EXT1, EXT2, DEPTID)
+    values (#{recid,jdbcType=DECIMAL}, #{pcs,jdbcType=DECIMAL}, #{weight,jdbcType=DECIMAL}, 
+      #{ei,jdbcType=VARCHAR}, #{vol,jdbcType=DECIMAL}, #{uldNo,jdbcType=VARCHAR}, #{whslocation,jdbcType=VARCHAR}, 
+      #{mawbid,jdbcType=DECIMAL}, #{awbpre,jdbcType=VARCHAR}, #{awbno,jdbcType=VARCHAR}, 
+      #{createOpe,jdbcType=VARCHAR}, #{createTime,jdbcType=DATE}, #{updateOpe,jdbcType=VARCHAR}, 
+      #{updateTime,jdbcType=DATE}, #{companyCode,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, 
+      #{ext1,jdbcType=VARCHAR}, #{ext2,jdbcType=VARCHAR}, #{deptid,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.sl.dao.entity.GWhsEntity" >
+    <selectKey resultType="java.math.BigDecimal" keyProperty="recid" order="BEFORE" >
+      select SEQ_G_WHS.NEXTVAL as recid from dual
+    </selectKey>
+    insert into G_WHS
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      RECID,
+      <if test="pcs != null" >
+        PCS,
+      </if>
+      <if test="weight != null" >
+        WEIGHT,
+      </if>
+      <if test="ei != null" >
+        EI,
+      </if>
+      <if test="vol != null" >
+        VOL,
+      </if>
+      <if test="uldNo != null" >
+        ULD_NO,
+      </if>
+      <if test="whslocation != null" >
+        WHSLOCATION,
+      </if>
+      <if test="mawbid != null" >
+        MAWBID,
+      </if>
+      <if test="awbpre != null" >
+        AWBPRE,
+      </if>
+      <if test="awbno != null" >
+        AWBNO,
+      </if>
+      <if test="createOpe != null" >
+        CREATE_OPE,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="updateOpe != null" >
+        UPDATE_OPE,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+      <if test="companyCode != null" >
+        COMPANY_CODE,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+      <if test="ext1 != null" >
+        EXT1,
+      </if>
+      <if test="ext2 != null" >
+        EXT2,
+      </if>
+      <if test="deptid != null" >
+        DEPTID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      #{recid,jdbcType=DECIMAL},
+      <if test="pcs != null" >
+        #{pcs,jdbcType=DECIMAL},
+      </if>
+      <if test="weight != null" >
+        #{weight,jdbcType=DECIMAL},
+      </if>
+      <if test="ei != null" >
+        #{ei,jdbcType=VARCHAR},
+      </if>
+      <if test="vol != null" >
+        #{vol,jdbcType=DECIMAL},
+      </if>
+      <if test="uldNo != null" >
+        #{uldNo,jdbcType=VARCHAR},
+      </if>
+      <if test="whslocation != null" >
+        #{whslocation,jdbcType=VARCHAR},
+      </if>
+      <if test="mawbid != null" >
+        #{mawbid,jdbcType=DECIMAL},
+      </if>
+      <if test="awbpre != null" >
+        #{awbpre,jdbcType=VARCHAR},
+      </if>
+      <if test="awbno != null" >
+        #{awbno,jdbcType=VARCHAR},
+      </if>
+      <if test="createOpe != null" >
+        #{createOpe,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=DATE},
+      </if>
+      <if test="updateOpe != null" >
+        #{updateOpe,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=DATE},
+      </if>
+      <if test="companyCode != null" >
+        #{companyCode,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="ext1 != null" >
+        #{ext1,jdbcType=VARCHAR},
+      </if>
+      <if test="ext2 != null" >
+        #{ext2,jdbcType=VARCHAR},
+      </if>
+      <if test="deptid != null" >
+        #{deptid,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sl.dao.entity.GWhsEntity" >
+    update G_WHS
+    <set >
+      <if test="pcs != null" >
+        PCS = #{pcs,jdbcType=DECIMAL},
+      </if>
+      <if test="weight != null" >
+        WEIGHT = #{weight,jdbcType=DECIMAL},
+      </if>
+      <if test="ei != null" >
+        EI = #{ei,jdbcType=VARCHAR},
+      </if>
+      <if test="vol != null" >
+        VOL = #{vol,jdbcType=DECIMAL},
+      </if>
+      <if test="uldNo != null" >
+        ULD_NO = #{uldNo,jdbcType=VARCHAR},
+      </if>
+      <if test="whslocation != null" >
+        WHSLOCATION = #{whslocation,jdbcType=VARCHAR},
+      </if>
+      <if test="mawbid != null" >
+        MAWBID = #{mawbid,jdbcType=DECIMAL},
+      </if>
+      <if test="awbpre != null" >
+        AWBPRE = #{awbpre,jdbcType=VARCHAR},
+      </if>
+      <if test="awbno != null" >
+        AWBNO = #{awbno,jdbcType=VARCHAR},
+      </if>
+      <if test="createOpe != null" >
+        CREATE_OPE = #{createOpe,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=DATE},
+      </if>
+      <if test="updateOpe != null" >
+        UPDATE_OPE = #{updateOpe,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=DATE},
+      </if>
+      <if test="companyCode != null" >
+        COMPANY_CODE = #{companyCode,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="ext1 != null" >
+        EXT1 = #{ext1,jdbcType=VARCHAR},
+      </if>
+      <if test="ext2 != null" >
+        EXT2 = #{ext2,jdbcType=VARCHAR},
+      </if>
+      <if test="deptid != null" >
+        DEPTID = #{deptid,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where RECID = #{recid,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sl.dao.entity.GWhsEntity" >
+    update G_WHS
+    set PCS = #{pcs,jdbcType=DECIMAL},
+      WEIGHT = #{weight,jdbcType=DECIMAL},
+      EI = #{ei,jdbcType=VARCHAR},
+      VOL = #{vol,jdbcType=DECIMAL},
+      ULD_NO = #{uldNo,jdbcType=VARCHAR},
+      WHSLOCATION = #{whslocation,jdbcType=VARCHAR},
+      MAWBID = #{mawbid,jdbcType=DECIMAL},
+      AWBPRE = #{awbpre,jdbcType=VARCHAR},
+      AWBNO = #{awbno,jdbcType=VARCHAR},
+      CREATE_OPE = #{createOpe,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=DATE},
+      UPDATE_OPE = #{updateOpe,jdbcType=VARCHAR},
+      UPDATE_TIME = #{updateTime,jdbcType=DATE},
+      COMPANY_CODE = #{companyCode,jdbcType=VARCHAR},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      EXT1 = #{ext1,jdbcType=VARCHAR},
+      EXT2 = #{ext2,jdbcType=VARCHAR},
+      DEPTID = #{deptid,jdbcType=DECIMAL}
+    where RECID = #{recid,jdbcType=DECIMAL}
+  </update>
+
+<!--AUTOGEN-END-->
+</mapper>

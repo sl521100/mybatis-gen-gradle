@@ -1,0 +1,158 @@
+group 'com.sl'
+version '1.0'
+
+apply plugin: 'java'
+apply plugin: 'maven'
+apply plugin: 'idea'
+
+sourceCompatibility = 1.8
+[compileJava, compileTestJava].each() {
+    it.options.compilerArgs += ["-Xlint:unchecked", "-Xlint:deprecation", "-Xlint:-options"]
+    it.options.encoding = "UTF-8"
+}
+
+repositories {
+    mavenLocal()
+    maven { url "http://172.21.129.57:8081/nexus/content/groups/public/" }
+    maven { url "http://repo.maven.apache.org/maven2" }
+}
+configurations {
+    compile
+}
+dependencies {
+    compile('com.sl:mybatis-generator:1.3.3-SNAPSHOT') {
+        exclude(module: 'com.oracle')
+    }
+
+    // mybatisGenerator 'mysql:mysql-connector-java:5.1.36'
+    compile files('lib/ojdbc6-11.2.0.3jar')
+    //compile 'tk.mybatis:mapper:3.3.2'
+}
+
+sourceSets {
+    main {
+        compileClasspath += configurations.compile
+
+        runtimeClasspath += configurations.compile
+    }
+}
+
+def getDbProperties = {
+    def properties = new Properties()
+    file("src/main/resources/cfg.properties").withInputStream { inputStream ->
+        properties.load(inputStream)
+    }
+
+    properties;
+
+}
+
+task(addComment, dependsOn: 'classes', type: JavaExec) {
+    print "addComment ..."
+
+    main = 'com.sl.tools.MymybatisTool'
+    classpath = sourceSets.main.runtimeClasspath
+    args =['D:\\Programe\\java\\maven\\mybatis-generator-1.3.2-source\\mybatis-gen-gradle\\src\\main\\java\\com\\sl\\dao',
+           'D:\\Programe\\java\\maven\\mybatis-generator-1.3.2-source\\mybatis-gen-gradle\\test\\lgha' +
+                   ';D:\\Programe\\java\\maven\\mybatis-generator-1.3.2-source\\mybatis-gen-gradle\\test\\mybatis',
+           'ADD']
+//    args =['D:\\Programe\\java\\maven\\mybatis-generator-1.3.2-source\\mybatis-gen-gradle\\test\\lgha' +
+//                   ';D:\\Programe\\java\\maven\\mybatis-generator-1.3.2-source\\mybatis-gen-gradle\\test\\mybatis',
+//           'D:\\Programe\\java\\maven\\mybatis-generator-1.3.2-source\\mybatis-gen-gradle\\test\\lgha' +
+//                   ';D:\\Programe\\java\\maven\\mybatis-generator-1.3.2-source\\mybatis-gen-gradle\\test\\mybatis',
+//           'ADD'
+//    ]
+//    args =['D:\\Programe\\java\\maven\\lgha\\lgha_root\\lgha-dao\\src\\main\\java\\com\\sl\\apps\\lgha' +
+//                   ';D:\\Programe\\java\\maven\\lgha\\lgha_root\\lgha-dao\\src\\main\\resources\\mybatis\\lgha',
+//           'D:\\Programe\\java\\maven\\mybatis-generator-1.3.2-source\\mybatis-gen-gradle\\test\\lgha' +
+//                   ';D:\\Programe\\java\\maven\\mybatis-generator-1.3.2-source\\mybatis-gen-gradle\\test\\mybatis',
+//           'ADD'
+//    ]
+    //args；第一个参数是mybatis生成文件的路径，多个用;分隔
+    //第二个参数是需要替换mybatis生成文件的路径，多个用;分隔 ；一般为已经在使用的代码文件
+    //第三个参数是ADD，将mybatis生成的文件加上标签；UPDATE,将新生成的mybatis文件去替换之前旧的文件；只替换标签内的字符
+}
+task(updateComment, dependsOn: 'classes', type: JavaExec) {
+    print "updateComment ..."
+
+    main = 'com.sl.tools.MymybatisTool'
+    classpath = sourceSets.main.runtimeClasspath
+    args=['D:\\Programe\\java\\maven\\mybatis-generator-1.3.2-source\\mybatis-gen-gradle\\src\\main\\java\\com\\sl\\dao',
+          'D:\\Programe\\java\\maven\\mybatis-generator-1.3.2-source\\mybatis-gen-gradle\\test\\lgha' +
+                  ';D:\\Programe\\java\\maven\\mybatis-generator-1.3.2-source\\mybatis-gen-gradle\\test\\mybatis',
+          'UPDATE'
+    ]
+    //args；第一个参数是mybatis生成文件的路径，多个用;分隔
+    //第二个参数是需要替换mybatis生成文件的路径，多个用;分隔 ；一般为已经在使用的代码文件
+    //第三个参数是ADD，将mybatis生成的文件加上标签；UPDATE,将新生成的mybatis文件去替换之前旧的文件；只替换标签内的字符
+}
+
+
+
+
+task mybatisGenerate << {
+
+
+    def properties = getDbProperties()
+
+
+
+    ant.properties['targetProject'] = projectDir.path
+    ant.properties['driverClass'] = properties.getProperty("jdbc.driverClassName")
+    ant.properties['connectionURL'] = properties.getProperty("jdbc.url")
+    ant.properties['userId'] = properties.getProperty("jdbc.user")
+    ant.properties['password'] = properties.getProperty("jdbc.pass")
+    ant.properties['src_main_java'] = sourceSets.main.java.srcDirs[0].path
+    ant.properties['src_main_resources'] = sourceSets.main.resources.srcDirs[0].path
+    ant.properties['modelPackage'] = properties.getProperty("modelPackage")
+    ant.properties['mapperPackage'] = properties.getProperty("mapperPackage")
+    ant.properties['sqlMapperPackage'] = properties.getProperty("sqlMapperPackage")
+
+    println("compile path:" + configurations.compile.asPath)
+
+    ant.taskdef(
+            name: 'mbgenerator',
+            classname: 'org.mybatis.generator.ant.GeneratorAntTask',
+            classpath: configurations.compile.asPath
+
+    )
+    ant.mbgenerator(overwrite: true,
+            configfile: 'src/main/resources/generatorConfig.xml', verbose: true) {
+        propertyset {
+            propertyref(name: 'targetProject')
+            propertyref(name: 'userId')
+            propertyref(name: 'driverClass')
+            propertyref(name: 'connectionURL')
+            propertyref(name: 'password')
+            propertyref(name: 'src_main_java')
+            propertyref(name: 'src_main_resources')
+            propertyref(name: 'modelPackage')
+            propertyref(name: 'mapperPackage')
+            propertyref(name: 'sqlMapperPackage')
+
+        }
+
+    }
+}
+
+mybatisGenerate.doLast{addComment.execute()}
+
+//设置snapshot缓存更新
+configurations.all {
+    resolutionStrategy.cacheChangingModulesFor 0, 'minutes'
+}
+idea.project {
+    jdkName = '1.8'
+    languageLevel = '1.8'
+}
+idea {
+    module {
+        scopes.COMPILE.plus += [configurations.compile]
+    }
+}
+
+
+//addComment 任务，为指定代码文件添加标识；
+//mybatisGenerate 任务，会先生成代码文件，然后调用addComment任务添加标识；
+//updateComment 任务，将新生成的代码文件去替换旧的代码文件；
+
