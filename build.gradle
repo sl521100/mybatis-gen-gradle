@@ -21,11 +21,11 @@ configurations {
 }
 dependencies {
     compile('com.sl:mybatis-generator:1.3.3-SNAPSHOT') {
-        exclude(module: 'com.oracle')
+       // exclude(module: 'com.oracle')
     }
 
     // mybatisGenerator 'mysql:mysql-connector-java:5.1.36'
-    compile files('lib/ojdbc6-11.2.0.3jar')
+    //compile files('lib/ojdbc6-11.2.0.3jar')
     //compile 'tk.mybatis:mapper:3.3.2'
 }
 

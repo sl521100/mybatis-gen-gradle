@@ -4,8 +4,6 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 public class GWhsEntity {
-/*<AUTOGEN--BEGIN>*/
-
     /*<记录ID>*/
     private BigDecimal recid;
 
@@ -214,6 +212,4 @@ public class GWhsEntity {
     public void setDeptid(BigDecimal deptid) {
         this.deptid = deptid;
     }
-
-/*<AUTOGEN--END>*/
 }

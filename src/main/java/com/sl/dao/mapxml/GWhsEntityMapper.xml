@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.sl.dao.mapper.GWhsEntityMapper" >
-<!--AUTOGEN-BEGIN-->
-
   <resultMap id="BaseResultMap" type="com.sl.dao.entity.GWhsEntity" >
     <id column="RECID" property="recid" jdbcType="DECIMAL" />
     <result column="PCS" property="pcs" jdbcType="DECIMAL" />
@@ -257,6 +255,4 @@
       DEPTID = #{deptid,jdbcType=DECIMAL}
     where RECID = #{recid,jdbcType=DECIMAL}
   </update>
-
-<!--AUTOGEN-END-->
 </mapper>

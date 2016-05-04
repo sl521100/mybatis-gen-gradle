@@ -28,10 +28,10 @@ public class MymybatisTool {
             flag = args[2];
         }
 //test
-        path = "D:\\Programe\\java\\maven\\mybatis-generator-1.3.2-source\\mybatis-gen-gradle\\src\\main\\java\\com\\sl\\dao";
-        targetPath = "D:\\Programe\\java\\maven\\mybatis-generator-1.3.2-source\\mybatis-gen-gradle\\test\\lgha;" +
-                "D:\\Programe\\java\\maven\\mybatis-generator-1.3.2-source\\mybatis-gen-gradle\\test\\mybatis";
-        flag = "UPDATE";
+//        path = "D:\\Programe\\java\\maven\\mybatis-generator-1.3.2-source\\mybatis-gen-gradle\\src\\main\\java\\com\\sl\\dao";
+//        targetPath = "D:\\Programe\\java\\maven\\mybatis-generator-1.3.2-source\\mybatis-gen-gradle\\test\\lgha;" +
+//                "D:\\Programe\\java\\maven\\mybatis-generator-1.3.2-source\\mybatis-gen-gradle\\test\\mybatis";
+//        flag = "UPDATE";
 
         if (flag.equals("ADD")) {
             invokeAddComment(path);
