@@ -7,6 +7,8 @@
     <!--location="D:/apache-maven/apache-maven-3.3.3/store/com/oracle/ojdbc6/11.2.0.3/ojdbc6-11.2.0.3.jar"/>-->
     <!--<classPathEntry-->
             <!--location="D:/.m2/repository/com/oracle/ojdbc6/11.2.0.3/ojdbc6-11.2.0.3.jar"/>-->
+    <classPathEntry
+            location="D:/.m2/repository/com/oracle/ojdbc6/11.2.0.3/ojdbc6-11.2.0.3.jar"/>
     <context id="my" targetRuntime="MyBatis3">
         <plugin type="org.mybatis.generator.myextension.Mymybatis_mapplugin">
             <!--<property name="mappers" value="tk.mybatis.mapper.common.Mapper"/>-->
